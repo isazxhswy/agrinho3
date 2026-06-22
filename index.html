@@ -18,7 +18,6 @@ body {
     text-align: center;
 }
 
-/* Cabeçalho */
 header {
     background: linear-gradient(135deg, #163d6b, #1d4f8a);
     color: white;
@@ -47,7 +46,6 @@ header p {
     flex-wrap: wrap;
 }
 
-/* Estilo do Post / Card */
 .post {
     flex: 1;
     min-width: 300px;
@@ -93,7 +91,6 @@ header p {
     margin-bottom: 20px;
 }
 
-/* Área de Reações */
 .reacoes {
     display: flex;
     justify-content: center;
@@ -117,8 +114,6 @@ header p {
 .btn-reacao:hover {
     background-color: #f0f0f0;
 }
-
-/* Quando o botão for desativado após o clique */
 .btn-reacao:disabled {
     background-color: #f0f0f0;
     color: #aaa;
@@ -157,7 +152,7 @@ header p {
     <div class="post">
         <div class="icon-post">🌌</div>
         <h2>A quantidade de dados no mundo é surreal</h2>
-        <p class="autor">Por: Marcelo Paludetto</p>
+        <p class="autor">Por: Isadora Maciel</p>
         <p class="texto">
             Estima-se que 90% de todos os dados existentes no mundo hoje foram gerados apenas nos últimos dois anos. Vivemos em uma verdadeira explosão de informação que não para de acelerar.
         </p>
@@ -175,7 +170,7 @@ header p {
     <div class="post">
         <div class="icon-post">📦</div>
         <h2>O primeiro mouse não era de plástico</h2>
-        <p class="autor">Por: Giulliana Cestari</p>
+        <p class="autor">Por: Isadora Maciel</p>
         <p class="texto">
             Antes do design ergonômico e das luzes RGB, o primeiro mouse do mundo foi construído em madeira! Criado por Douglas Engelbart em 1964, ele tinha o formato de uma caixa quadrada e apenas um botão.
         </p>
@@ -193,29 +188,27 @@ header p {
 </div>
 
 <script>
-    // Seleciona todos os blocos de posts da página
+    
     const posts = document.querySelectorAll('.post');
-
-    // Aplica a lógica individualmente para cada post
+    
     posts.forEach(post => {
         const btnCoracao = post.querySelector('.btn-coracao');
         const btnLike = post.querySelector('.btn-like');
         
         const contCoracao = btnCoracao.querySelector('span');
         const contLike = btnLike.querySelector('span');
-
-        // Evento do botão de Coração
+        
         btnCoracao.addEventListener('click', () => {
             let qtd = parseInt(contCoracao.textContent);
             contCoracao.textContent = qtd + 1;
-            btnCoracao.disabled = true; // Bloqueia para votar apenas uma vez
+            btnCoracao.disabled = true; 
         });
 
-        // Evento do botão de Curtir
+        
         btnLike.addEventListener('click', () => {
             let qtd = parseInt(contLike.textContent);
             contLike.textContent = qtd + 1;
-            btnLike.disabled = true; // Bloqueia para votar apenas uma vez
+            btnLike.disabled = true; 
         });
     });
 </script>
