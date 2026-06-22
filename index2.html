@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meu Blog Tech</title>
+
+<style>
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5faff;
+    text-align: center;
+}
+
+header {
+    background: linear-gradient(135deg, #163d6b, #1d4f8a);
+    color: white;
+    padding: 60px 20px;
+    margin-bottom: 40px;
+}
+
+header h1 {
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+
+header p {
+    font-size: 18px;
+    font-weight: 300;
+}
+
+/* Container dos Cards */
+.container-posts {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto padding 20px;
+    padding: 0 20px 50px 20px;
+    flex-wrap: wrap;
+}
+
+.post {
+    flex: 1;
+    min-width: 300px;
+    max-width: 360px;
+    background: white;
+    padding: 30px 20px;
+    border: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.icon-post {
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+
+.post h2 {
+    color: #163d6b;
+    font-size: 26px;
+    margin-bottom: 15px;
+    line-height: 1.2;
+}
+
+.autor {
+    color: #333;
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.texto {
+    font-size: 15px;
+    line-height: 1.5;
+    color: #444;
+    margin-bottom: 20px;
+}
+
+.fonte {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.reacoes {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.btn-reacao {
+    font-size: 14px;
+    padding: 6px 12px;
+    border: 1px solid #999;
+    background-color: #fcfcfc;
+    color: #333;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: 4px;
+}
+
+.btn-reacao:hover {
+    background-color: #f0f0f0;
+}
+.btn-reacao:disabled {
+    background-color: #f0f0f0;
+    color: #aaa;
+    border-color: #ddd;
+    cursor: not-allowed;
+}
+.tema-botoes {
+    margin-top: 20px;
+}
+
+.tema-botoes button {
+    padding: 10px 15px;
+    margin: 5px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+body {
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Tema escuro */
+body.dark-mode {
+    background-color: #121212;
+    color: white;
+}
+
+body.dark-mode .post {
+    background-color: #1e1e1e;
+    color: white;
+    border-color: #444;
+}
+
+body.dark-mode .texto,
+body.dark-mode .autor,
+body.dark-mode .fonte {
+    color: #ddd;
+}
+
+body.dark-mode .btn-reacao {
+    background-color: #333;
+    color: white;
+    border-color: #555;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Meu blog tech</h1>
+    <p>Vou compartilhar conhecimentos sobre tecnologia e programação</p>
+</header>
+
+<div class="container-posts">
+
+    <div class="post">
+        <div class="icon-post">📖</div>
+        <h2>Meu primeiro post</h2>
+        <p class="autor">Por: Isadora Maciel</p>
+        <p class="texto">
+            Boas-vindas ao meu novo blog! Aqui vou compartilhar dicas de programação
+            e curiosidades na área de tecnologia.
+        </p>
+        <div class="reacoes">
+            <button class="btn-reacao btn-coracao">
+                ❤️ <span>0</span>
+            </button>
+            <button class="btn-reacao btn-like">
+                👍 <span>0</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="post">
+        <div class="icon-post">🌌</div>
+        <h2>A quantidade de dados no mundo é surreal</h2>
+        <p class="autor">Por: Isadora Maciel</p>
+        <p class="texto">
+            Estima-se que 90% de todos os dados existentes no mundo hoje foram gerados apenas nos últimos dois anos. Vivemos em uma verdadeira explosão de informação que não para de acelerar.
+        </p>
+        <p class="fonte">Fonte: Jornal Opção</p>
+        <div class="reacoes">
+            <button class="btn-reacao btn-coracao">
+                ❤️ <span>0</span>
+            </button>
+            <button class="btn-reacao btn-like">
+                👍 <span>0</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="post">
+        <div class="icon-post">📦</div>
+        <h2>O primeiro mouse não era de plástico</h2>
+        <p class="autor">Por: Isadora Maciel</p>
+        <p class="texto">
+            Antes do design ergonômico e das luzes RGB, o primeiro mouse do mundo foi construído em madeira! Criado por Douglas Engelbart em 1964, ele tinha o formato de uma caixa quadrada e apenas um botão.
+        </p>
+        <p class="fonte">Fonte: TecMundo</p>
+        <div class="reacoes">
+            <button class="btn-reacao btn-coracao">
+                ❤️ <span>0</span>
+            </button>
+            <button class="btn-reacao btn-like">
+                👍 <span>0</span>
+            </button>
+        </div>
+    </div>
+
+</div>
+<div class="tema-botoes">
+    <button id="btn-claro">☀️ Sol</button>
+    <button id="btn-escuro">🌙 Lua</button>
+</div>
+<script>
+    
+    const posts = document.querySelectorAll('.post');
+    
+    posts.forEach(post => {
+        const btnCoracao = post.querySelector('.btn-coracao');
+        const btnLike = post.querySelector('.btn-like');
+        
+        const contCoracao = btnCoracao.querySelector('span');
+        const contLike = btnLike.querySelector('span');
+        
+        btnCoracao.addEventListener('click', () => {
+            let qtd = parseInt(contCoracao.textContent);
+            contCoracao.textContent = qtd + 1;
+            btnCoracao.disabled = true; 
+        });
+
+        
+        btnLike.addEventListener('click', () => {
+            let qtd = parseInt(contLike.textContent);
+            contLike.textContent = qtd + 1;
+            btnLike.disabled = true; 
+        });
+    });
+const btnClaro = document.getElementById('btn-claro');
+const btnEscuro = document.getElementById('btn-escuro');
+
+btnEscuro.addEventListener('click', () => {
+    document.body.classList.add('dark-mode');
+});
+
+btnClaro.addEventListener('click', () => {
+    document.body.classList.remove('dark-mode');
+});
+</script>
+
+</body>
+</html>
