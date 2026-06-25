@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aventura na Floresta Mágica</title>
+    <style>
+        /* Variáveis de Cores para os Temas */
+        :root {
+            --bg-gradient: linear-gradient(135deg, #1e3c23, #0b1d12);
+            --container-bg: rgba(20, 40, 25, 0.95);
+            --border-color: #4a7c59;
+            --text-main: #f0f3f1;
+            --text-title: #68b984;
+            --btn-bg: #3b6647;
+            --btn-hover: #4a7c59;
+        }
+
+        [data-theme="claro"] {
+            --bg-gradient: linear-gradient(135deg, #e2ebd5, #c2d3a8);
+            --container-bg: rgba(255, 255, 255, 0.95);
+            --border-color: #7aa874;
+            --text-main: #2c3e2e;
+            --text-title: #3b6647;
+            --btn-bg: #52734d;
+            --btn-hover: #7aa874;
+        }
+
+        [data-theme="mistico"] {
+            --bg-gradient: linear-gradient(135deg, #2d1b4e, #0f081d);
+            --container-bg: rgba(35, 20, 55, 0.95);
+            --border-color: #8b5cf6;
+            --text-main: #f3e8ff;
+            --text-title: #a78bfa;
+            --btn-bg: #6d28d9;
+            --btn-hover: #8b5cf6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Barra de Botões Extras (Controles) */
+        .controls-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn-control {
+            background-color: var(--btn-bg);
+            color: white;
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            font-size: 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-control:hover {
+            background-color: var(--btn-hover);
+        }
+
+        /* Container Principal do Jogo */
+        .game-container {
+            background-color: var(--container-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        h1 {
+            color: var(--text-title);
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Estilização da Imagem Dinâmica */
+        .story-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .story-text {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            min-height: 80px;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .btn {
+            background-color: var(--btn-bg);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .btn:hover {
+            background-color: var(--btn-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-restart {
+            background-color: #8c3a3a !important;
+        }
+        .btn-restart:hover {
+            background-color: #a64444 !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="controls-container">
+        <button class="btn-control" onclick="changeTheme('padrao')">🌲 Tema Floresta</button>
+        <button class="btn-control" onclick="changeTheme('claro')">☀️ Tema Claro</button>
+        <button class="btn-control" onclick="changeTheme('mistico')">🔮 Tema Místico</button>
+    </div>
+
+    <div class="game-container">
+        <h1>A Floresta dos Segredos</h1>
+        <img id="story-img" class="story-image" src="" alt="Cenário atual">
+        <div id="story" class="story-text">Carregando história...</div>
+        <div id="options" class="options-container"></div>
+    </div>
+
+    <script>
+        // Estrutura de dados com 15 cenários e imagens correspondentes
+        const storyNodes = {
+            1: {
+                text: "Você está na entrada de uma floresta antiga e densa. O sol está começando a se pôr. Para onde você vai?",
+                image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=600&q=80",
+                options: [
+                    { text: "Seguir pelo caminho florido da esquerda", nextNode: 2 },
+                    { text: "Entrar pela trilha de árvores escuras da direita", nextNode: 3 }
+                ]
+            },
+            2: {
+                text: "O caminho florido exala um perfume doce, mas logo você dá de cara com um rio de águas rápidas. O que faz?",
+                image: "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&w=600&q=80",
+                options: [
+                    { text: "Tentar atravessar o rio a nado", nextNode: 4 },
+                    { text: "Caminhar pelas margens do rio procurando uma ponte", nextNode: 5 }
+                ]
+            },
+            3: {
+                text: "As árvores aqui são tão altas que cobrem a luz do céu. De repente, você ouve um galho quebrando logo atrás de você!",
+                image: "https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80",
+                options: [
+                    { text: "Ficar imóvel e investigar o barulho", nextNode: 6 },
+                    { text: "Correr o mais rápido que puder para frente", nextNode: 7 }
+                ]
+            },
+            4: {
+                text: "A correnteza puxa um pouco, mas você consegue nadar até uma pequena ilha no meio do rio. Lá, encontra um baú de madeira antigo.",
+                image: "https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=600&q=80",
+                options: [
+                    { text: "Abrir o baú imediatamente", nextNode: 8 },
+                    { text: "Ignorar o baú e descansar na areia", nextNode: 9 }
+                ]
+            },
+            5: {
+                text: "Seguindo a margem, você não acha uma ponte, mas encontra um esquilo falante com uma pequena mochila nas costas!",
+                image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=600&q=80",
+                options: [
+                    { text: "Seguir o esquilo, que acena para você", nextNode: 10 },
+                    { text: "Ignorar a criatura e continuar andando sozinho", nextNode: 11 }
+                ]
+            },
+            6: {
+                text: "Você se vira devagar e vê um filhote de urso preso em algumas videiras. Ele parece assustado.",
+                image: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80",
+                options: [
+                    { text: "Ajudar a libertar o filhote de urso", nextNode: 12 },
+                    { text: "Afastar-se lentamente para não arrumar problemas", nextNode: 13 }
+                ]
+            },
+            7: {
+                text: "Você corre sem olhar para trás e acaba tropeçando na entrada de uma caverna misteriosa, parcialmente escondida por cipós.",
+                image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80",
+                options: [
+                    { text: "Entrar na caverna para se esconder", nextNode: 14 },
+                    { text: "Subir em uma árvore grande para observar de cima", nextNode: 15 }
+                ]
+            },
+            // Finais do jogo
+            8: {
+                text: "FIM: O baú continha um mapa mágico que revela todos os tesouros do mundo! Você se tornou o maior explorador.",
+                image: "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=600&q=80",
+                options: [{ text: "Jogar Novamente 🔄", nextNode: 1 }]
+            },
+            9: {
+                text: "FIM: Você adormece ao som do rio e a floresta te aceitou. Você agora vive em paz absoluta com a natureza.",
+                image: "https://images.unsplash.com/photo-1498855926480-d98e83099315?auto=format&fit=crop&w=600&q=80",
+                options: [{ text: "Jogar Novamente 🔄", nextNode: 1 }]
+            },
+            10: {
+                text: "FIM: O esquilo te guia até uma vila escondida de fadas! Elas te transformam no guardião honorário da floresta.",
+                image: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?auto=format&fit=crop&w=600&q=80",
+                options: [{ text: "Jogar Novamente 🔄", nextNode: 1 }]
+            },
+            11: {
+                text: "FIM: Você anda por horas e encontra um pomar mágico de frutos dourados. Você decide construir sua cabana ali.",
+                image: "https://images.unsplash.com/photo-1444333523262-a3a28170b14c?auto=format&fit=crop&w=600&q=80",
+                options: [{ text: "Jogar Novamente 🔄", nextNode: 1 }]
+            },
+            12: {
+                text: "FIM: A mãe ursa aparece e, agradecida por salvar o filhote, te guia com segurança para fora da floresta.",
+                image: "https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=600&q=80",
+                options: [{ text: "Jogar Novamente 🔄", nextNode: 1 }]
+            },
+            13: {
+                text: "FIM: Ao recuar, você pisa em uma runa antiga. Um portal se abre e te teleporta em segurança de volta para casa!",
+                image: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=600&q=80",
+                options: [{ text: "Jogar Novamente 🔄", nextNode: 1 }]
+            },
+            14: {
+                text: "FIM: Na caverna, você descobre uma parede de cristais brilhantes que levam a um antigo reino subterrâneo perdido.",
+                image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80",
+                options: [{ text: "Jogar Novamente 🔄", nextNode: 1 }]
+            },
+            15: {
+                text: "FIM: Do topo da árvore você vê um pôr do sol lindo e nota que a floresta flutua! Uma nova jornada flutuante começa.",
+                image: "https://images.unsplash.com/photo-1470240731273-7821a6eeb6bd?auto=format&fit=crop&w=600&q=80",
+                options: [{ text: "Jogar Novamente 🔄", nextNode: 1 }]
+            }
+        };
+
+        const storyElement = document.getElementById('story');
+        const imgElement = document.getElementById('story-img');
+        const optionsElement = document.getElementById('options');
+
+        // Atualiza a tela com imagem, texto e botões
+        function showNode(nodeIndex) {
+            const currentNode = storyNodes[nodeIndex];
+            
+            storyElement.textContent = currentNode.text;
+            imgElement.src = currentNode.image;
+            optionsElement.innerHTML = '';
+            
+            currentNode.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option.text;
+                button.classList.add('btn');
+                
+                if (option.nextNode === 1) {
+                    button.classList.add('btn-restart');
+                }
+                
+                button.addEventListener('click', () => showNode(option.nextNode));
+                optionsElement.appendChild(button);
+            });
+        }
+
+        // Função do Botão Extra para mudar o Tema
+        function changeTheme(themeName) {
+            if (themeName === 'padrao') {
+                document.body.removeAttribute('data-theme');
+            } else {
+                document.body.setAttribute('data-theme', themeName);
+            }
+        }
+
+        // Inicializa o jogo
+        showNode(1);
+    </script>
+</body>
+</html>
